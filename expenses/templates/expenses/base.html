@@ -11,6 +11,7 @@
 </head>
 <body class="dark-theme">
     <div class="app-wrapper">
+        {% if user.is_authenticated %}
         <aside class="sidebar">
             <div class="logo">
                 <i class="fas fa-wallet"></i>
@@ -25,7 +26,6 @@
                 </ul>
             </nav>
             <div class="user-menu">
-                {% if user.is_authenticated %}
                 <div class="user-info">
                     <span class="user-name">{{ user.username }}</span>
                     <form action="{% url 'logout' %}" method="post" style="box-shadow: none; padding: 0; background: transparent; margin: 0;">
@@ -33,13 +33,11 @@
                         <button type="submit" class="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
                     </form>
                 </div>
-                {% else %}
-                <a href="{% url 'login' %}" class="btn-primary">Login</a>
-                {% endif %}
             </div>
         </aside>
+        {% endif %}
         
-        <main class="main-content">
+        <main class="main-content {% if not user.is_authenticated %}full-width{% endif %}">
             <header class="top-bar">
                 <h1>{% block header %}Overview{% endblock %}</h1>
             </header>

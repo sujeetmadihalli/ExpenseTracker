@@ -42,9 +42,10 @@ def register_user(request):
         form = UserCreationForm()
     return render(request, 'expenses/register.html', {'form': form})
 
-@login_required
 def home(request):
-    return redirect('dashboard')
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+    return render(request, 'expenses/home.html')
 
 @login_required
 def add_expense(request):

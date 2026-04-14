@@ -81,6 +81,11 @@ body {
     margin-left: 260px;
     flex: 1;
     padding: 2rem 3rem;
+    transition: margin-left 0.3s;
+}
+
+.main-content.full-width {
+    margin-left: 0;
 }
 
 .top-bar {
