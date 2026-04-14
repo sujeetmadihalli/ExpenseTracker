@@ -1,40 +1,84 @@
 {% extends 'expenses/base.html' %}
 
+{% block header %}Analytics & Filters{% endblock %}
+
 {% block content %}
-<h2>Filter Expenses</h2>
-<form method="get">
-    <div class="form-group">
-        <label for="category">Category:</label>
-        <select name="category" id="category">
-            <option value="">-- Select Category --</option>
-            <option value="Food" {% if category == "Food" %}selected{% endif %}>Food</option>
-            <option value="Transport" {% if category == "Transport" %}selected{% endif %}>Transport</option>
-            <option value="Utilities" {% if category == "Utilities" %}selected{% endif %}>Utilities</option>
-            <option value="Entertainment" {% if category == "Entertainment" %}selected{% endif %}>Entertainment</option>
-            <option value="Other" {% if category == "Other" %}selected{% endif %}>Other</option>
-        </select>
+<div class="analytics-grid">
+    <aside class="filter-sidebar glass-form">
+        <form method="get">
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select name="category" id="category">
+                    <option value="">All Categories</option>
+                    <option value="Food" {% if category == "Food" %}selected{% endif %}>Food</option>
+                    <option value="Transport" {% if category == "Transport" %}selected{% endif %}>Transport</option>
+                    <option value="Utilities" {% if category == "Utilities" %}selected{% endif %}>Utilities</option>
+                    <option value="Entertainment" {% if category == "Entertainment" %}selected{% endif %}>Entertainment</option>
+                    <option value="Other" {% if category == "Other" %}selected{% endif %}>Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Date Range</label>
+                <div style="display: flex; gap: 0.5rem;">
+                    <input type="date" name="start_date" value="{{ start_date }}" placeholder="From">
+                    <input type="date" name="end_date" value="{{ end_date }}" placeholder="To">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Amount Range</label>
+                <div style="display: flex; gap: 0.5rem;">
+                    <input type="number" step="0.01" name="min_amount" value="{{ min_amount }}" placeholder="Min">
+                    <input type="number" step="0.01" name="max_amount" value="{{ max_amount }}" placeholder="Max">
+                </div>
+            </div>
+            <button type="submit" class="btn-primary">Apply Filters</button>
+            <a href="{% url 'filter_expenses' %}" class="btn-secondary" style="display: block; text-align: center; margin-top: 1rem; color: var(--text-dim); text-decoration: none;">Reset</a>
+        </form>
+    </aside>
+
+    <div class="results-area">
+        <div class="table-card">
+            <table class="expense-list">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for expense in expenses %}
+                    <tr>
+                        <td>{{ expense.date }}</td>
+                        <td>{{ expense.category }}</td>
+                        <td class="amount-cell">${{ expense.amount|floatformat:2 }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" style="text-align: center; padding: 3rem; color: var(--text-dim);">No results matching your filters.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="start_date">Start Date:</label>
-        <input type="date" name="start_date" id="start_date" value="{{ start_date }}">
-    </div>
-    <div class="form-group">
-        <label for="end_date">End Date:</label>
-        <input type="date" name="end_date" id="end_date" value="{{ end_date }}">
-    </div>
-    <div class="form-group">
-        <label for="min_amount">Min Amount:</label>
-        <input type="number" step="0.01" name="min_amount" id="min_amount" value="{{ min_amount }}">
-    </div>
-    <div class="form-group">
-        <label for="max_amount">Max Amount:</label>
-        <input type="number" step="0.01" name="max_amount" id="max_amount" value="{{ max_amount }}">
-    </div>
-    <button type="submit">Filter</button>
-</form>
-<ul>
-    {% for expense in expenses %}
-        <li>{{ expense.date }} - {{ expense.category }}: ₹{{ expense.amount|floatformat:2 }}</li>
-    {% endfor %}
-</ul>
+</div>
+
+<style>
+    .analytics-grid {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 2rem;
+    }
+    .filter-sidebar {
+        height: fit-content;
+        position: sticky;
+        top: 2rem;
+    }
+    @media (max-width: 900px) {
+        .analytics-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
 {% endblock %}

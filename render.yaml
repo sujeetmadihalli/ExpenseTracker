@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: expense-tracker
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn expense_tracker.wsgi:application"
+    envVars:
+      - key: DATABASE_URL
+        value: "postgresql://neondb_owner:npg_chSZsOlt3V9N@ep-nameless-rain-amf5wx1o.c-5.us-east-1.aws.neon.tech/neondb?sslmode=require"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: "*"

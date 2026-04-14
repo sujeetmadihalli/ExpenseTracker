@@ -1,9 +1,24 @@
 {% extends 'expenses/base.html' %}
 
-{% block header %}
-<h2>Welcome to Expense Tracker</h2>
-{% endblock %}
+{% block header %}Welcome to ExTrack{% endblock %}
 
 {% block content %}
-<p>Use the navigation bar to manage your expenses.</p>
+<div class="glass-form text-center" style="max-width: 800px; padding: 4rem;">
+    <div style="font-size: 4rem; color: var(--primary); margin-bottom: 2rem;">
+        <i class="fas fa-chart-line"></i>
+    </div>
+    <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Master Your Money</h2>
+    <p style="font-size: 1.2rem; color: var(--text-dim); margin-bottom: 3rem;">
+        The simplest way to track your expenses, visualize your spending patterns, and stay within budget.
+    </p>
+    
+    {% if not user.is_authenticated %}
+    <div style="display: flex; gap: 1.5rem; justify-content: center;">
+        <a href="{% url 'register' %}" class="btn-primary" style="padding: 1rem 2rem; width: auto;">Get Started for Free</a>
+        <a href="{% url 'login' %}" class="btn-primary" style="padding: 1rem 2rem; width: auto; background: var(--sidebar-bg); border: 1px solid var(--glass-border);">Sign In</a>
+    </div>
+    {% else %}
+    <a href="{% url 'dashboard' %}" class="btn-primary" style="padding: 1rem 2rem; width: auto;">Go to My Dashboard</a>
+    {% endif %}
+</div>
 {% endblock %}

@@ -1,10 +1,18 @@
 {% extends 'expenses/base.html' %}
 
+{% block header %}Add Expense{% endblock %}
+
 {% block content %}
-<h2>Add Expense</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Add Expense</button>
-</form>
+<div class="glass-form">
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn-primary">Save Expense</button>
+    </form>
+</div>
 {% endblock %}

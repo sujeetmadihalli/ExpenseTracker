@@ -1,12 +1,26 @@
 <!-- login.html -->
 
-{% extends 'base.html' %}
+{% extends 'expenses/base.html' %}
+
+{% block header %}Welcome Back{% endblock %}
 
 {% block content %}
-<h2>Login</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-</form>
+<div class="glass-form login-card">
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <i class="fas fa-user-circle" style="font-size: 4rem; color: var(--primary);"></i>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn-primary">Sign In</button>
+    </form>
+    <p style="text-align: center; margin-top: 1.5rem; color: var(--text-dim);">
+        Don't have an account? <a href="{% url 'register' %}" style="color: var(--primary);">Register here</a>
+    </p>
+</div>
 {% endblock %}

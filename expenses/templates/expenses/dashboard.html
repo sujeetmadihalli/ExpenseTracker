@@ -1,0 +1,97 @@
+{% extends 'expenses/base.html' %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>Total Spent</h3>
+            <p class="stat-value">${{ total_spent|floatformat:2 }}</p>
+        </div>
+        <div class="stat-card primary">
+            <h3>Spent This Month</h3>
+            <p class="stat-value">${{ spent_this_month|floatformat:2 }}</p>
+        </div>
+    </div>
+
+    <div class="charts-grid">
+        <div class="chart-container">
+            <h3>Spending by Category</h3>
+            <canvas id="categoryChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h3>Spending Trend (Last 6 Months)</h3>
+            <canvas id="trendChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Category Chart
+        const ctxCategory = document.getElementById('categoryChart').getContext('2d');
+        const categoryLabels = [{% for item in category_data %}"{{ item.category }}",{% endfor %}];
+        const categoryValues = [{% for item in category_data %}{{ item.total }},{% endfor %}];
+
+        new Chart(ctxCategory, {
+            type: 'doughnut',
+            data: {
+                labels: categoryLabels,
+                datasets: [{
+                    data: categoryValues,
+                    backgroundColor: [
+                        '#6366f1', '#a855f7', '#ec4899', '#f43f5e', '#f59e0b', '#10b981'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#e2e8f0' }
+                    }
+                }
+            }
+        });
+
+        // Trend Chart
+        const ctxTrend = document.getElementById('trendChart').getContext('2d');
+        const trendLabels = [{% for item in monthly_trend %}"{{ item.date|date:'Y-m' }}",{% endfor %}];
+        const trendValues = [{% for item in monthly_trend %}{{ item.total }},{% endfor %}];
+
+        new Chart(ctxTrend, {
+            type: 'line',
+            data: {
+                labels: trendLabels,
+                datasets: [{
+                    label: 'Daily/Monthly Spending',
+                    data: trendValues,
+                    borderColor: '#6366f1',
+                    backgroundColor: 'rgba(99, 102, 241, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#e2e8f0' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#e2e8f0' }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

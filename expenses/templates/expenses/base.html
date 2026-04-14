@@ -3,30 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker</title>
+    <title>ExpenseTracker | Personal Finance</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'expenses/css/styles.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-    {% block header %}
-    <h2>Welcome to Expense Tracker</h2>
-    {% endblock %}
-    <nav>
-        <ul>
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'add_expense' %}">Add Expense</a></li>
-            <li><a href="{% url 'list_expenses' %}">List Expenses</a></li>
-            <li><a href="{% url 'filter_expenses' %}">Filter Expenses</a></li>
-        </ul>
-    </nav>
-    {% block content %}
-    {% endblock %}
+<body class="dark-theme">
+    <div class="app-wrapper">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-wallet"></i>
+                <span>ExTrack</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'dashboard' %}" class="nav-link"><i class="fas fa-th-large"></i> Dashboard</a></li>
+                    <li><a href="{% url 'list_expenses' %}" class="nav-link"><i class="fas fa-list"></i> All Expenses</a></li>
+                    <li><a href="{% url 'add_expense' %}" class="nav-link"><i class="fas fa-plus-circle"></i> Add New</a></li>
+                    <li><a href="{% url 'filter_expenses' %}" class="nav-link"><i class="fas fa-filter"></i> Analytics</a></li>
+                </ul>
+            </nav>
+            <div class="user-menu">
+                {% if user.is_authenticated %}
+                <div class="user-info">
+                    <span class="user-name">{{ user.username }}</span>
+                    <form action="{% url 'logout' %}" method="post" style="box-shadow: none; padding: 0; background: transparent; margin: 0;">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
+                    </form>
+                </div>
+                {% else %}
+                <a href="{% url 'login' %}" class="btn-primary">Login</a>
+                {% endif %}
+            </div>
+        </aside>
+        
+        <main class="main-content">
+            <header class="top-bar">
+                <h1>{% block header %}Overview{% endblock %}</h1>
+            </header>
+            <section class="content-area">
+                {% block content %}{% endblock %}
+            </section>
+        </main>
+    </div>
     <script src="{% static 'expenses/js/scripts.js' %}"></script>
 </body>
 </html>
