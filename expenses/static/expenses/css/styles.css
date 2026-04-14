@@ -66,7 +66,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-
 .amount-cell { font-weight: 700; color: var(--accent); }
 
 /* Forms & Filters */
-.glass-form { background: var(--card-bg); padding: 2rem; border-radius: 24px; border: 1px solid var(--glass-border); width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+.glass-form { background: var(--card-bg); padding: 2rem; border-radius: 24px; border: 1px solid var(--glass-border); width: 100%; max-width: 600px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
 .form-group { margin-bottom: 1.5rem; }
 label { display: block; margin-bottom: 0.5rem; color: var(--text-dim); font-weight: 500; font-size: 0.9rem; }
 input, select { width: 100%; padding: 0.9rem 1rem; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--glass-border); border-radius: 12px; color: white; font-family: inherit; transition: all 0.3s; font-size: 1rem; }
