@@ -44,8 +44,9 @@ INSTALLED_APPS = [
     'expenses',
 ]
 
-LOGIN_REDIRECT_URL = 'home'  # Redirect to the home page after login
-LOGOUT_REDIRECT_URL = 'home'  # Redirect to the home page after logout
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
