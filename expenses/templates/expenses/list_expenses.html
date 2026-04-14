@@ -3,21 +3,38 @@
 {% block header %}Recent Expenses{% endblock %}
 
 {% block content %}
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    window.location.reload();  // Reload the page after successful deletion
-                } else {
-                    throw new Error('Failed to delete expense');
-                }
-            })
-            .catch(error => {
-                console.error('Error deleting expense:', error);
-                alert('Failed to delete expense. Please try again.');
-            });
-        }
-    }
-</script>
+<div class="table-card">
+    <table class="expense-list">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+            <tr>
+                <td>{{ expense.date|date:"M d, Y" }}</td>
+                <td>
+                    <span style="background: rgba(99, 102, 241, 0.1); color: var(--primary); padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.85rem; font-weight: 600;">
+                        {{ expense.category }}
+                    </span>
+                </td>
+                <td class="amount-cell">${{ expense.amount|floatformat:2 }}</td>
+                <td>
+                    <a href="{% url 'remove_expense' expense.id %}" class="btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; text-decoration: none;">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align: center; padding: 3rem; color: var(--text-dim);">
+                    No expenses found. <a href="{% url 'add_expense' %}" style="color: var(--primary); text-decoration: none;">Add one now.</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
