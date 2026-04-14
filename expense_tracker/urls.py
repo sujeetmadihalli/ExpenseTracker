@@ -25,6 +25,5 @@ urlpatterns = [
     path('register/', register_user, name='register'),
     path('admin/', admin.site.urls),
     path('', expense_views.home, name='home'),
-    path('expenses/', include('expenses.urls')),
-    path('', include('expenses.urls')),
+    path('app/', include('expenses.urls')),
 ]
