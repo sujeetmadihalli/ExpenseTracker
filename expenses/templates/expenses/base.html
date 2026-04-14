@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ExpenseTracker | Personal Finance</title>
+    <title>ExpenseTracker | Premium Finance</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'expenses/css/styles.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,12 +12,30 @@
 <body class="dark-theme">
     <div class="app-wrapper">
         {% if user.is_authenticated %}
-        <aside class="sidebar">
+        
+        <!-- Mobile Header -->
+        <header class="mobile-header">
             <div class="logo">
                 <i class="fas fa-wallet"></i>
                 <span>ExTrack</span>
             </div>
-            <nav>
+            <button id="sidebarToggle" class="hamburger-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </header>
+
+        <!-- Sidebar Overlay (for clicking out) -->
+        <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+        <aside class="sidebar" id="sidebar">
+            <button id="sidebarClose" class="sidebar-close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="logo desktop-logo">
+                <i class="fas fa-wallet"></i>
+                <span>ExTrack</span>
+            </div>
+            <nav class="sidebar-nav">
                 <ul>
                     <li><a href="{% url 'dashboard' %}" class="nav-link"><i class="fas fa-th-large"></i> Dashboard</a></li>
                     <li><a href="{% url 'list_expenses' %}" class="nav-link"><i class="fas fa-list"></i> All Expenses</a></li>
@@ -41,11 +59,29 @@
             <header class="top-bar">
                 <h1>{% block header %}Overview{% endblock %}</h1>
             </header>
-            <section class="content-area">
+            <section class="content-area fade-in">
                 {% block content %}{% endblock %}
             </section>
         </main>
     </div>
+    
     <script src="{% static 'expenses/js/scripts.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.getElementById('sidebarToggle');
+            const closeBtn = document.getElementById('sidebarClose');
+            const overlay = document.getElementById('sidebarOverlay');
+
+            function toggleSidebar() {
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+            }
+
+            if (toggle) toggle.addEventListener('click', toggleSidebar);
+            if (closeBtn) closeBtn.addEventListener('click', toggleSidebar);
+            if (overlay) overlay.addEventListener('click', toggleSidebar);
+        });
+    </script>
 </body>
 </html>
