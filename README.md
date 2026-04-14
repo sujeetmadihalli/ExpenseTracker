@@ -1,92 +1,74 @@
-# Expense Tracker
+# ExTrack (Expense Tracker)
 
-Expense Tracker is a Django-based web application to help you keep track of your expenses. It allows you to add, list, filter, and delete expense entries.
+ExTrack is a premium, mobile-first, Django-based web application to help you keep track of your expenses flawlessly. Built with a sleek Midnight Dark Glassmorphism interface, it allows for secure multi-user management, rich charting analytics, and easy tracking of individual expenses.
 
-## Features
+## ✨ Features
 
-- Add new expenses with a category and amount.
-- View a list of all expenses.
-- Filter expenses by date and category.
-- Delete expenses.
+- **Premium UI/UX:** Responsive mobile-first design with interactive elements, off-canvas navigation menus, and Glassmorphism styling.
+- **Secure Authentication:** Multi-user support so everyone's data remains completely private and perfectly organized.
+- **Comprehensive Expense Management:** Add new expenses with designated Names, predefined Categories, and Amounts.
+- **Analytics Dashboard:** Visual representation of your spending habits using Chart.js (Doughnut category breakdown and historical Line charts).
+- **Advanced Filtering:** Stacked, mobile-friendly forms to filter your entire expense history by Category, specific Date Ranges, and Amount boundaries.
+- **Swipeable Data Tables:** Horizontally scrollable data tables explicitly built for mobile constraints.
 
-## Technologies Used
+## 🚀 Technologies Used
 
-- Django 3.2.12
-- Python 3.10
-- SQLite (default database)
+- **Framework:** Django 3.2.12
+- **Language:** Python 3.12 
+- **Database:** Neon Serverless PostgreSQL (Production) / SQLite (Local)
+- **Frontend:** Vanilla HTML5, modern CSS3 (Flexbox/Grid), secure Vanilla JS, Chart.js
+- **Deployment & Hosting:** Vercel (Serverless Edge Python Runtime), WhiteNoise (for static file caching)
 
-## Setup Instructions
+## 🛠️ Setup Instructions
 
 ### Prerequisites
-
-- Python 3.10
+- Python 3.10+
 - Git
 
 ### Installation
 
-1. Clone the repository:
-
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/sujeetmadihalli/ExpenseTracker.git
    cd ExpenseTracker
-   
-2. Create a virtual environment and activate it:
+   ```
 
-python3 -m venv venv
-source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+2. **Activate a Python Environment and install dependencies:**
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+   ```
 
-3. Install the required packages:
+3. **Setup the Database:**
+   *(By default, this runs locally on SQLite if no DATABASE_URL is provided)*
+   ```bash
+   python manage.py migrate
+   ```
 
-pip install -r requirements.txt
+4. **Create a Superuser:**
+   ```bash
+   python manage.py createsuperuser
+   ```
 
-4. Apply migrations:
+5. **Run the development server:**
+   ```bash
+   python manage.py runserver
+   ```
+   Open your browser and navigate to `http://127.0.0.1:8000/`.
 
-python manage.py migrate
+## 📂 Project Structure
+*(Simplified)*
+```text
+ExpenseTracker/
+├── expense_tracker/  # Core Django config, URL routing, settings
+├── expenses/         # Main business logic, models, views, and templates
+│   ├── static/       # CSS and JS assets (styles.css, scripts.js)
+│   ├── templates/    # UI definitions (base.html, dashboard.html, etc.)
+├── build_files.sh    # Vercel deployment hook
+├── vercel.json       # Vercel serverless routing configuration
+└── requirements.txt  # Python package dependencies
+```
 
-5.Create a superuser to access the Django admin:
-
-python manage.py createsuperuser
-
-6. Run the development server:
-
-python manage.py runserver
-
-7. Open your browser and go to http://127.0.0.1:8000/.
-
-8. Project Structure
-
-expense_tracker/
-├── expense_tracker/
-│   ├── __init__.py
-│   ├── asgi.py
-│   ├── settings.py
-│   ├── urls.py
-│   ├── wsgi.py
-├── expenses/
-│   ├── __init__.py
-│   ├── admin.py
-│   ├── apps.py
-│   ├── models.py
-│   ├── tests.py
-│   ├── urls.py
-│   ├── views.py
-│   ├── templates/
-│       ├── expenses/
-│           ├── base.html
-│           ├── home.html
-│           ├── add_expense.html
-│           ├── list_expenses.html
-│           ├── filter_expenses.html
-│           ├── remove_expense.html
-├── manage.py
-├── requirements.txt
-
-9. Contributing
+## 🤝 Contributing
 Contributions are welcome! Please open an issue or submit a pull request for any changes.
-
-
-
-
-
-
-
